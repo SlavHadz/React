@@ -1,0 +1,10 @@
+.Cinema {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 600px) {
+    .Cinema {
+        flex-direction: row;
+    }
+}

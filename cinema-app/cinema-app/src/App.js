@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import Cinames from './containers/Cinemas/Cinemas';
+import Cinema from './containers/Cinema/Cinema';
+import Seets from './components/Seets/Seets';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Cinames />
+        <Cinema />
+        <Seets />
       </div>
     );
   }

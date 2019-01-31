@@ -1,0 +1,15 @@
+.Seet {
+    width: 50px;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    margin: 10px;
+}
+
+.Free {
+    border-bottom: 50px solid aquamarine;
+}
+
+.Ocupied {
+    border-bottom: 50px solid red;
+}

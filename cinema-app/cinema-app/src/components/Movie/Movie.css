@@ -1,7 +1,10 @@
 .Movie {
     margin: 0 auto;
     width: 70%;
-    height: 600px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border: 5px solid rgb(70, 70, 70);
     background-color: rgb(20, 20, 20);
     color: white;
@@ -15,18 +18,18 @@
 }
 
 .Movie img {
-    margin: auto;
     display: block;
     width: 80%;
     height: 70%;
 }
 
 .Movie:hover {
-    transform: scale(1.1);
+    transform: scale(1.02);
 }
 
 @media (min-width: 600px) {
     .Movie {
         width: 400px;
+        height: 600px;
     }
 }

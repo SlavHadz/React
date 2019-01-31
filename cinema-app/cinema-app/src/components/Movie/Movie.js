@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../Button/Button';
 import './Movie.css'
 
 const cinema = (props) => {
@@ -7,6 +8,7 @@ const cinema = (props) => {
             <h2>{props.title}</h2>
             <img src={props.img}/>
             <p>Prize: {props.prize} BGN</p>
+            <Button>TICKETS</Button>
         </div>
     )
 }
