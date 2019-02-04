@@ -5,10 +5,10 @@ const seet = (props) => {
     let returnedSeet;
     switch (props.ocupied) {
         case true:
-        returnedSeet = (<div onClick={props.clicked} className='Seet Ocupied'></div>)
+        returnedSeet = (<p onClick={props.clicked} className='Seet Ocupied'></p>)
         break;
         case false:
-        returnedSeet = (<div onClick={props.clicked} className='Seet Free'></div>)
+        returnedSeet = (<p onClick={props.clicked} className='Seet Free'></p>)
         break;
         default:
         returnedSeet = null;
