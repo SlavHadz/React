@@ -1,0 +1,8 @@
+.Table {
+    margin-top: 40px;
+}
+
+tr td,
+tr th {
+    text-align: center;
+}

@@ -19,11 +19,17 @@
 .Nav ul li {
     list-style: none;
     font-size: 18px;
-    text-transform: capitalize;
     margin: 10px;
 }
 
-.Nav ul li:hover {
-    color: rgb(150, 150, 150);
+.Nav ul li a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: black;
+}
+
+.Nav ul li a:hover,
+.Nav ul li a.active {
+    color: rgb(200, 20, 20);
 }
 
