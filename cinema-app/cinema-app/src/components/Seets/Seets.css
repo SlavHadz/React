@@ -1,3 +1,7 @@
+.SeetsPageContainer {
+    background-color: rgb(15, 15, 36);
+}
+
 .Seets {
     margin-top: 40px;
 }
@@ -7,8 +11,10 @@
 }
 
 .Screen {
-    width: 80%;
+    width: 100%;
     height: 20px;
+    color: white;
+    font-size: 20px;
     border: 2px solid grey;
     border-radius: 10%;
     text-align: center;
@@ -17,6 +23,7 @@
 
 .textTop {
     margin-top: 40px;
+    text-align: center;
 }
 
 .movieName {
@@ -34,6 +41,41 @@
 
 .ButtonContainer {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+.ButtonContainer div h3 {
+    margin: 50px;
+    text-align: center;
+}
+
+.OrderButton {
+    width: 80px;
+    height: 40px;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.OrderButton:hover {
+    color: rgb(200, 50, 50);
+    animation: orderHover 0.5s ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes orderHover {
+    0% {
+        transform: scale(1);
+    }
+    80% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1.1);
+    }
 }

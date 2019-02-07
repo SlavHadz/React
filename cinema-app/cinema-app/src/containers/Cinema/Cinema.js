@@ -403,15 +403,15 @@ class Cinemas extends Component {
                 <Movie img={batmanImg}
                 title='Batman Dark Knight'
                 name='batman'
-                prize='10' />
+                price='10' />
                 <Movie img={interstellarImg}
                 title='Interstellar'
                 name='interstellar'
-                prize='12'/>
+                price='12'/>
                 <Movie img={avengersImg}
                 title='Avengers: Infinity War'
                 name='avengers'
-                prize='8'/>
+                price='8'/>
             </>
         )
 

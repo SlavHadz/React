@@ -8,8 +8,8 @@ const cinema = (props) => {
         <div className='Movie'>
             <h2>{props.title}</h2>
             <img src={props.img} alt='movie poster'/>
-            <p>Prize: {props.prize} BGN</p>
-            <Link to={'/movies/' + props.name}><Button>TICKETS</Button></Link>
+            <p>Prize: {props.price} BGN</p>
+            <Link to={'/movies/' + props.name + '/' + props.price}><Button>TICKETS</Button></Link>
         </div>
     )
 }

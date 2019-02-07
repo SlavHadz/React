@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import Seet from './Seet/Seet';
 import axios from '../../axios';
 import './Seets.css';
-import Button from '../Button/Button';
+import OrderSummary from '../OrderSummary/OrderSummary';
 
 class Seets extends Component {
 
-    state = { cinema: null }
+    state = {
+        cinema: null,
+        totalPrice: 0
+    }
 
     componentDidMount() {
         axios.get('/' + this.props.match.params.name + '.json')
@@ -15,28 +18,47 @@ class Seets extends Component {
             });
         }
 
-        seetClickedHandler = (number) => {
-        // let seetsKey = Object.keys(this.state.cinema)[0];
+    seetClickedHandler = (number) => {
         let rows = [...this.state.cinema.rows];
+        let price = this.state.totalPrice;
         rows.map(row => {
             row.seets.map(seet => {
                 if (seet.id === number && seet.changeble) {
                     seet.ocupied = !seet.ocupied;
                 }
+                if(seet.id === number && seet.changeble && seet.ocupied) {
+                    price = price + Number(this.props.match.params.price);
+                } else if (seet.id === number && seet.changeble && !seet.ocupied) {
+                    price = price - Number(this.props.match.params.price);
+                }
             });
         })
         this.setState({
-            cinema: { rows }
+            cinema: { rows },
+            totalPrice: price
         });
     }
 
     orderClickedHandler = () => {
-        axios.put('/' + this.props.match.params.name + '.json', this.state.cinema)
+        let rows = [...this.state.cinema.rows];
+        rows.map(row => {
+            row.seets.map(seet => {
+                if(seet.ocupied) {
+                    seet.changeble = false;
+                }
+                return seet;
+            })
+            return row;
+        });
+        this.setState({
+            cinema: {rows}
+        }, () => {
+            axios.put('/' + this.props.match.params.name + '.json', this.state.cinema)
             .then(res => console.log('send successfully'));
-        console.log(this.state.cinema);
+        });
     }
 
-        render() {
+    render() {
             let movieName = ''
             switch(this.props.match.params.name) {
                 case 'batman':
@@ -66,7 +88,7 @@ class Seets extends Component {
             }
 
                 return (
-                <>
+                <div className='SeetsPageContainer'>
                 <h2 className='textTop'>Choose your seets for <span className='movieName'>{movieName}</span></h2>
                 <div className='container'>
                     <div className='SeetsContainer'>
@@ -74,13 +96,18 @@ class Seets extends Component {
                         <div className= 'Screen'>SCREEN</div>
                     </div>
                     <div className='ButtonContainer'>
-                        <Button clicked={this.orderClickedHandler}>ORDER SEETS</Button>
+                        <div>
+                            <h3>Total price: {(this.state.totalPrice).toFixed(2)}</h3>
+                        </div>
+                        <button className='OrderButton' onClick={this.orderClickedHandler}>ORDER</button>
                     </div>
                 </div>
-                </>
+                <OrderSummary totalPrice={this.state.totalPrice}
+                price={this.props.match.params.price} />
+                </div>
                 )
             }
 
         }
 
-        export default Seets;
+    export default Seets;
