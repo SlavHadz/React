@@ -3,12 +3,15 @@ import Seet from './Seet/Seet';
 import axios from '../../axios';
 import './Seets.css';
 import OrderSummary from '../OrderSummary/OrderSummary';
+import Modal from '../Modal/Modal';
+import Spinner from '../Spinner/Spinner';
 
 class Seets extends Component {
 
     state = {
         cinema: null,
-        totalPrice: 0
+        totalPrice: 0,
+        ordering: false
     }
 
     componentDidMount() {
@@ -51,12 +54,19 @@ class Seets extends Component {
             return row;
         });
         this.setState({
-            cinema: {rows}
+            cinema: {rows},
+            ordering: true
         }, () => {
             axios.put('/' + this.props.match.params.name + '.json', this.state.cinema)
             .then(res => console.log('send successfully'));
         });
-    }
+    };
+
+    orderCanceledHandler = () => {
+        this.setState({
+            ordering: false
+        });
+    };
 
     render() {
             let movieName = ''
@@ -73,7 +83,7 @@ class Seets extends Component {
                 default:
                     movieName = 'Movie name not found';
             }
-            let seets = null;
+            let seets = <Spinner />;
             if(this.state.cinema) {
                 // let seetsKey = Object.keys(this.state.cinema)[0];
                 seets = this.state.cinema.rows.map((row, index) => {
@@ -87,24 +97,32 @@ class Seets extends Component {
                         });
             }
 
-                return (
-                <div className='SeetsPageContainer'>
-                <h2 className='textTop'>Choose your seets for <span className='movieName'>{movieName}</span></h2>
-                <div className='container'>
-                    <div className='SeetsContainer'>
-                        <div className= 'Seets' > {seets} </div>
-                        <div className= 'Screen'>SCREEN</div>
-                    </div>
-                    <div className='ButtonContainer'>
-                        <div>
-                            <h3>Total price: {(this.state.totalPrice).toFixed(2)}</h3>
+            let body = (
+                    <div className='SeetsPageContainer'>
+                        <h2 className='textTop'>Choose your seets for <span className='movieName'>{movieName}</span></h2>
+                        <div className='container'>
+                            <div className='SeetsContainer'>
+                                <div className= 'Seets' > {seets} </div>
+                                <div className= 'Screen'>SCREEN</div>
+                            </div>
+                            <div className='ButtonContainer'>
+                                <div>
+                                    <h3>Total price: {(this.state.totalPrice).toFixed(2)}</h3>
+                                </div>
+                                <button className='OrderButton' onClick={this.orderClickedHandler}>ORDER</button>
+                            </div>
                         </div>
-                        <button className='OrderButton' onClick={this.orderClickedHandler}>ORDER</button>
                     </div>
-                </div>
-                <OrderSummary totalPrice={this.state.totalPrice}
-                price={this.props.match.params.price} />
-                </div>
+            )
+
+                return (
+                <>  <Modal show={this.state.ordering}>
+                        <OrderSummary totalPrice={this.state.totalPrice}
+                        price={this.props.match.params.price}
+                        cancel={this.orderCanceledHandler} />
+                    </Modal>
+                    {body}
+                </>
                 )
             }
 
