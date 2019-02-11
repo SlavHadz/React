@@ -7,10 +7,10 @@ const orderSummary = (props) => {
     return (
         <>
             <h3>Your order:</h3>
-            <p>You selected {ticketsNumber} tickets for the movie: </p>
+            <p>You selected {ticketsNumber} tickets for the movie: {props.movie}</p>
             <p><strong>Total price: {(props.totalPrice).toFixed(2)}</strong></p>
             <p>Continue to checkout?</p>
-            <Button>CONTINUE</Button>
+            <Button clicked={props.continue}>CONTINUE</Button>
             <Button clicked={props.cancel}>CANCEL</Button>
         </>
     )

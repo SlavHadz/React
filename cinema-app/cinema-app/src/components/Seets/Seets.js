@@ -43,6 +43,16 @@ class Seets extends Component {
     }
 
     orderClickedHandler = () => {
+        this.setState({ordering: true});
+    };
+
+    orderCanceledHandler = () => {
+        this.setState({
+            ordering: false
+        });
+    };
+
+    continueOrderHandler = () => {
         let rows = [...this.state.cinema.rows];
         rows.map(row => {
             row.seets.map(seet => {
@@ -55,18 +65,11 @@ class Seets extends Component {
         });
         this.setState({
             cinema: {rows},
-            ordering: true
         }, () => {
             axios.put('/' + this.props.match.params.name + '.json', this.state.cinema)
             .then(res => console.log('send successfully'));
         });
-    };
-
-    orderCanceledHandler = () => {
-        this.setState({
-            ordering: false
-        });
-    };
+    }
 
     render() {
             let movieName = ''
@@ -116,10 +119,13 @@ class Seets extends Component {
             )
 
                 return (
-                <>  <Modal show={this.state.ordering}>
+                <>
+                    <Modal show={this.state.ordering} cancel={this.orderCanceledHandler}>
                         <OrderSummary totalPrice={this.state.totalPrice}
                         price={this.props.match.params.price}
-                        cancel={this.orderCanceledHandler} />
+                        cancel={this.orderCanceledHandler}
+                        movie={movieName}
+                        continue={this.continueOrderHandler} />
                     </Modal>
                     {body}
                 </>
