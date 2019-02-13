@@ -7,6 +7,7 @@ import Navigation from './components/Navigation/Navigation';
 import ScheduleTable from './components/Schedule/ScheduleTable';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import SideDrawer from './components/SideDrawer/SideDrawer';
+import ContactData from './containers/ContactData/ContactData';
 
 class App extends Component {
 
@@ -34,6 +35,7 @@ class App extends Component {
       <Switch>
         <Route path="/movies/:name/:price" component={ Seets }/>
         <Route path="/schedule" component={ScheduleTable} />
+        <Route path="/order-form" component={ContactData} />
         <Route path="/" component={ Cinema } />
       </Switch>
       </div>
