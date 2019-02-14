@@ -1,8 +1,11 @@
 import React from 'react';
+import './Input.css';
 
 const input = (props) => (
-    <div>
-        <input value={props.value} {...props.elementConfig}/>
+    <div className='Input'>
+        <input className='InputElement' value={props.value}
+        onChange={props.changed}
+        {...props.elementConfig}/>
     </div>
 )
 
