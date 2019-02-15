@@ -1,8 +1,7 @@
 .Seet {
     width: 10%;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
+    height: 10vh;
+    clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
     margin: 10px;
     box-sizing: border-box;
 }
@@ -13,4 +12,10 @@
 
 .Ocupied {
     border-bottom: 50px solid red;
+}
+
+@media (max-width: 500px) {
+    .Seet {
+        margin: 2px;
+    }
 }

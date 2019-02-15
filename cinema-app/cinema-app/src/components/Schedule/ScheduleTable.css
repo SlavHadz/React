@@ -1,5 +1,8 @@
 .Table {
     margin-top: 40px;
+    min-height: 100vh;
+    background-image: linear-gradient(#111111ab, #101010a8), url(../../assets/imgs/main-back.jpg);
+    background-size: cover;
 }
 
 tr td,
