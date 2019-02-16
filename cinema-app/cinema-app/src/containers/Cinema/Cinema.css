@@ -5,10 +5,18 @@
     justify-content: center;
     background-image: linear-gradient(to right, #222222c0, #111111c0) ,url(../../assets/imgs/main-back.jpg);
     background-size: cover;
+    background-attachment: fixed;
 }
 
 @media (min-width: 600px) {
     .Cinema {
         flex-direction: row;
+    }
+}
+
+@media (max-width: 500px) {
+    .Cinema {
+        flex-direction: column;
+        align-items: center;
     }
 }

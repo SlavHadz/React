@@ -106,7 +106,7 @@ class Seets extends Component {
                         <div className='container'>
                             <div className='SeetsContainer'>
                                 <div className= 'Seets' > {seets} </div>
-                                <div className= 'Screen'>SCREEN</div>
+                                <div className= 'Screen'><p>Screen</p></div>
                             </div>
                             <div className='ButtonContainer'>
                                 <div>

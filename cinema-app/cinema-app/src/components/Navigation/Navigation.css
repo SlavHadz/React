@@ -32,4 +32,9 @@
 .Nav ul li a.active {
     color: rgb(200, 20, 20);
 }
+@media (max-width: 500px) {
+    .Nav ul li a {
+        display: none;
+    }
+}
 
