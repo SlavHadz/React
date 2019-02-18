@@ -2,4 +2,8 @@
     margin-top: 40px;
     text-align: center;
     width: 100%;
+    min-height: 100vh;
+    background-image: linear-gradient(to right, #222222c0, #111111c0) ,url(../../assets/imgs/main-back.jpg);
+    background-size: cover;
+    background-attachment: fixed;
 }

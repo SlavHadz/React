@@ -14,22 +14,40 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Name'
                 },
+                validation: {
+                    required: true,
+                    minLength: 6,
+                    maxLength: 10
+                },
+                valid: false
             },
             phone: {
                 value: '',
                 elementConfig: {
                     type: 'text',
                     placeholder: 'Your Phone Number'
-                }
+                },
+                validation: {
+                    required: true,
+                    minLength: 10,
+                    maxLength: 10
+                },
+                valid: false
             },
             email: {
                 value: '',
                 elementConfig: {
                     type: 'email',
-                    placeholder: 'Your E-Mail'
-                }
+                    placeholder: 'Your E-Mail',
+                },
+                validation: {
+                    required: true,
+                    regexp: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                },
+                valid: false
             }
         },
+        formValid: false,
         loading: false
     }
 
@@ -46,6 +64,23 @@ class ContactData extends Component {
                 this.props.history.push('/');
             })
     }
+С
+    checkValidity = (value, rules) => {
+        let valid = true;
+        if(rules.required){
+            valid = value.trim() !== '' && valid;
+        }
+        if(rules.minLength){
+            valid = (value.trim()).length >= rules.minLength && valid;
+        }
+        if(rules.maxLength){
+            valid = (value.trim()).length <= rules.maxLength && valid;
+        }
+        if(rules.regexp){
+            valid = (rules.regexp).test(value) && valid;
+        }
+        return valid;
+    }
 
     inputChangedHandler = (event, inputIdentifier) => {
         let updatedOrderForm = {
@@ -55,8 +90,13 @@ class ContactData extends Component {
             ...updatedOrderForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        this.setState({orderForm: updatedOrderForm});
+        let formIsValid = true;
+        for(let idenftifier in updatedOrderForm){
+            formIsValid = updatedOrderForm[idenftifier].valid && formIsValid;
+        }
+        this.setState({orderForm: updatedOrderForm, formValid: formIsValid});
     }
 
     render() {
@@ -76,7 +116,7 @@ class ContactData extends Component {
                     elementConfig={formElement.config.elementConfig}
                     changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
                 ))}
-                <Button clicked={this.orderTicketsHandler}>ORDER TICKETS</Button>
+                <Button disabled={!this.state.formValid} clicked={this.orderTicketsHandler}>ORDER TICKETS</Button>
             </form>
         );
 
