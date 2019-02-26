@@ -7,10 +7,13 @@
     border: none;
     font-weight: bold;
     cursor: pointer;
+    transition: all .2s;
 }
 
 .Button:hover {
-    color: rgb(200, 50, 50)
+    transform: rotate(-5deg) scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    color: rgb(200, 35, 35)
 }
 
 .Button:disabled {

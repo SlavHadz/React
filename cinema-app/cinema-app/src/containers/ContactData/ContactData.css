@@ -7,3 +7,7 @@
     background-size: cover;
     background-attachment: fixed;
 }
+
+.ContactData h1 {
+    color: #999;
+}

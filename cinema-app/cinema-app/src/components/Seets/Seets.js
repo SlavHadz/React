@@ -5,6 +5,7 @@ import './Seets.css';
 import OrderSummary from '../OrderSummary/OrderSummary';
 import Modal from '../Modal/Modal';
 import Spinner from '../Spinner/Spinner';
+import { connect } from 'react-redux';
 
 class Seets extends Component {
 
@@ -134,4 +135,16 @@ class Seets extends Component {
 
         }
 
-    export default Seets;
+const mapStateToProps = state => {
+    return {
+        cinema: state.cinema
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onCinemaUpdate: () => dispatch({type: 'UPDATED'})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Seets);
