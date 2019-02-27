@@ -4,6 +4,7 @@ import Input from '../../components/orderForm/Input/Input';
 import axios from '../../axios';
 import Spinner from '../../components/Spinner/Spinner';
 import './ContactData.css';
+import { connect } from 'react-redux';
 
 class ContactData extends Component {
     state = {
@@ -57,14 +58,30 @@ class ContactData extends Component {
             name: this.state.orderForm.name.value,
             phone: this.state.orderForm.phone.value,
             email: this.state.orderForm.email.value,
+            price: this.props.price,
+            tickets: this.props.tickets
         }
         axios.post('/orders.json', orderData)
-            .then(response => {
-                this.setState({loading: false});
-                this.props.history.push('/');
+            .then(res => {
+                let rows = [...this.props.cinema.rows];
+                rows.map(row => {
+                    row.seets.map(seet => {
+                        if(seet.ocupied) {
+                            seet.changeble = false;
+                        }
+                        return seet;
+                    })
+                    return row;
+                });
+                this.props.onCinemaReceived({rows})
+                axios.put('/' + this.props.match.params.name + '.json', this.props.cinema)
+                .then(response => {
+                    this.setState({loading: false});
+                    this.props.history.push('/');
+                })
             })
     }
-С
+
     checkValidity = (value, rules) => {
         let valid = true;
         if(rules.required){
@@ -133,4 +150,18 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        cinema: state.cinema,
+        price: state.price,
+        tickets: state.tickets
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onCinemaReceived: (configuration) => dispatch({type: 'RECEIVE_CINEMA', seats: configuration})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

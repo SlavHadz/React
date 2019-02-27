@@ -10,21 +10,23 @@ import { connect } from 'react-redux';
 class Seets extends Component {
 
     state = {
-        cinema: null,
-        totalPrice: 0,
+        // WITHOUT REDUX
+        // cinema: null,
+        // totalPrice: 0,
         ordering: false
     }
 
     componentDidMount() {
         axios.get('/' + this.props.match.params.name + '.json')
             .then(res => {
-                this.setState({cinema: res.data});
+                this.props.onCinemaReceived(res.data);
             });
         }
 
     seetClickedHandler = (number) => {
-        let rows = [...this.state.cinema.rows];
-        let price = this.state.totalPrice;
+        let currentCinema = this.props.cinema;
+        let rows = [...currentCinema.rows];
+        let price = this.props.price;
         rows.map(row => {
             row.seets.map(seet => {
                 if (seet.id === number && seet.changeble) {
@@ -37,10 +39,13 @@ class Seets extends Component {
                 }
             });
         })
-        this.setState({
-            cinema: { rows },
-            totalPrice: price
-        });
+        this.props.onSeatClicked({rows}, price, this.props.match.params.price);
+        // WITHOUT REDUX
+        //
+        // this.setState({
+        //     cinema: { rows },
+        //     totalPrice: price
+        // });
     }
 
     orderClickedHandler = () => {
@@ -54,22 +59,26 @@ class Seets extends Component {
     };
 
     continueOrderHandler = () => {
-        let rows = [...this.state.cinema.rows];
-        rows.map(row => {
-            row.seets.map(seet => {
-                if(seet.ocupied) {
-                    seet.changeble = false;
-                }
-                return seet;
-            })
-            return row;
-        });
-        this.setState({
-            cinema: {rows},
-        }, () => {
-            axios.put('/' + this.props.match.params.name + '.json', this.state.cinema)
-            .then(res => console.log('send successfully'));
-        });
+        // WITHOUT REDUX
+        // let rows = [...this.state.cinema.rows];
+        // rows.map(row => {
+        //     row.seets.map(seet => {
+        //         if(seet.ocupied) {
+        //             seet.changeble = false;
+        //         }
+        //         return seet;
+        //     })
+        //     return row;
+        // });
+        // this.setState({
+        //     cinema: {rows},
+        // }, () => {
+        //     axios.put('/' + this.props.match.params.name + '.json', this.state.cinema)
+        //     .then(res => console.log('send successfully'));
+        //     this.props.history.push('/order-form');
+        // });
+        console.log(this.props.price + ' ' + this.props.tickets);
+        this.props.history.push('/order-form');
     }
 
     render() {
@@ -88,9 +97,9 @@ class Seets extends Component {
                     movieName = 'Movie name not found';
             }
             let seets = <Spinner />;
-            if(this.state.cinema) {
+            if(this.props.cinema) {
                 // let seetsKey = Object.keys(this.state.cinema)[0];
-                seets = this.state.cinema.rows.map((row, index) => {
+                seets = this.props.cinema.rows.map((row, index) => {
                     let rowSeets = row.seets.map(seet => {
                             return ( <Seet key = {seet.id}
                                 clicked = {() => this.seetClickedHandler(seet.id)}
@@ -111,7 +120,7 @@ class Seets extends Component {
                             </div>
                             <div className='ButtonContainer'>
                                 <div>
-                                    <h3>Total price: {(this.state.totalPrice).toFixed(2)}</h3>
+                                    <h3>Total price: {(this.props.price).toFixed(2)}</h3>
                                 </div>
                                 <button className='OrderButton' onClick={this.orderClickedHandler}>ORDER</button>
                             </div>
@@ -122,7 +131,7 @@ class Seets extends Component {
                 return (
                 <>
                     <Modal show={this.state.ordering} cancel={this.orderCanceledHandler}>
-                        <OrderSummary totalPrice={this.state.totalPrice}
+                        <OrderSummary totalPrice={this.props.price}
                         price={this.props.match.params.price}
                         cancel={this.orderCanceledHandler}
                         movie={movieName}
@@ -137,13 +146,20 @@ class Seets extends Component {
 
 const mapStateToProps = state => {
     return {
-        cinema: state.cinema
+        cinema: state.cinema,
+        price: state.price,
+        tickets: state.tickets
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onCinemaUpdate: () => dispatch({type: 'UPDATED'})
+        onCinemaReceived: (configuration) => dispatch({type: 'RECEIVE_CINEMA', seats: configuration}),
+        onSeatClicked: (configuration, newPrice, singlePrice) => dispatch({type: 'SEAT_CLICKED', payload: {
+            seats: configuration,
+            price: newPrice,
+            tickets: (newPrice / singlePrice)
+        }})
     }
 }
 
