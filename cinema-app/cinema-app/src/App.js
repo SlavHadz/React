@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cinema from './containers/Cinema/Cinema';
-import Seets from './components/Seets/Seets';
+import Seets from './containers/Seets/Seets';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';

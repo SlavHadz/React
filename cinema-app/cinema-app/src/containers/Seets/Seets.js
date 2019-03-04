@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Seet from './Seet/Seet';
 import axios from '../../axios';
 import './Seets.css';
-import OrderSummary from '../OrderSummary/OrderSummary';
-import Modal from '../Modal/Modal';
-import Spinner from '../Spinner/Spinner';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import Modal from '../../components/Modal/Modal';
+import Spinner from '../../components/Spinner/Spinner';
 import { connect } from 'react-redux';
 
 class Seets extends Component {
