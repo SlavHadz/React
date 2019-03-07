@@ -3,9 +3,7 @@ import './ToggleButton.css';
 
 const toggleButton = (props) => (
     <div className='ToggleButton' onClick={props.clicked}>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div className='ToggleStripe'></div>
     </div>
 )
 

@@ -8,13 +8,13 @@
     background-attachment: fixed;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
     .Cinema {
         flex-direction: row;
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 900px) {
     .Cinema {
         flex-direction: column;
         align-items: center;
